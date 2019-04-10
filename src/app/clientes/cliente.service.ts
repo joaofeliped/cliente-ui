@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 
 import { environment } from './../../environments/environment';
-import { Pessoa } from './../core/model';
+import { Cliente } from './../core/model';
 import { MoneyHttp } from '../seguranca/money-http';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ClienteService {
   listarTodas(): Promise<any> {
     return this.http.get<any>(this.clientesUrl)
       .toPromise()
-      .then(response => response.content);
+      .then(response => response);
   }
 
   excluir(codigo: number): Promise<void> {
@@ -28,18 +28,18 @@ export class ClienteService {
       .then(() => null);
   }
 
-  adicionar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.post<Pessoa>(this.clientesUrl, pessoa)
+  adicionar(cliente: Cliente): Promise<Cliente> {
+    return this.http.post<Cliente>(this.clientesUrl, cliente)
       .toPromise();
   }
 
-  atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.put<Pessoa>(`${this.clientesUrl}/${pessoa.codigo}`, pessoa)
+  atualizar(cliente: Cliente): Promise<Cliente> {
+    return this.http.put<Cliente>(`${this.clientesUrl}/${cliente.codigo}`, cliente)
       .toPromise();
   }
 
-  buscarPorCodigo(codigo: number): Promise<Pessoa> {
-    return this.http.get<Pessoa>(`${this.clientesUrl}/${codigo}`)
+  buscarPorCodigo(codigo: number): Promise<Cliente> {
+    return this.http.get<Cliente>(`${this.clientesUrl}/${codigo}`)
       .toPromise();
   }
 }

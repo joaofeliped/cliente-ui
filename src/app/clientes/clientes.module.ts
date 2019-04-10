@@ -10,6 +10,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { SharedModule } from './../shared/shared.module';
 
@@ -24,7 +25,6 @@ import { ClientesRoutingModule } from './clientes-routing.module';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
 
     InputTextModule,
     ButtonModule,
@@ -33,6 +33,7 @@ import { ClientesRoutingModule } from './clientes-routing.module';
     InputMaskModule,
     PanelModule,
     DialogModule,
+    DropdownModule,
 
     SharedModule,
     ClientesRoutingModule

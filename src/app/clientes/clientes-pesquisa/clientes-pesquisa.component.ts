@@ -23,22 +23,25 @@ export class ClientesPesquisaComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Pesquisa de clientes');
+    this.pesquisar();
   }
 
   pesquisar(pagina = 0) {
     this.clienteService.listarTodas()
       .then(resultado => {
-        this.totalRegistros = resultado.clientes.length;
-        this.clientes = resultado.clientes;
+        this.totalRegistros = resultado.length;
+        this.clientes = resultado;
+        
+        
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  confirmarExclusao(pessoa: any) {
+  confirmarExclusao(cliente: any) {
     this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
-        this.excluir(pessoa);
+        this.excluir(cliente);
       }
     });
   }

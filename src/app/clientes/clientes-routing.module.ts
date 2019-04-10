@@ -7,19 +7,19 @@ import { ClientesPesquisaComponent } from './clientes-pesquisa/clientes-pesquisa
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'clientes',
     component: ClientesPesquisaComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_PESQUISAR_CLIENTE'] }
   },
   {
-    path: 'novo',
+    path: 'clientes/novo',
     component: ClienteCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_CLIENTE'] }
   },
   {
-    path: ':codigo',
+    path: 'clientes/:codigo',
     component: ClienteCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_CLIENTE'] }
