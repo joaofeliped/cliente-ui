@@ -18,6 +18,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { MoneyHttp } from '../seguranca/money-http';
+import { CepService } from './cep.service';
 
 registerLocaleData(localePt);
 
@@ -43,6 +44,7 @@ registerLocaleData(localePt);
   providers: [
     ClienteService,
     ErrorHandlerService,
+    CepService,
     AuthService,
     MoneyHttp,
 

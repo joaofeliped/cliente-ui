@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 import { ClienteService } from './../cliente.service';
 import { Cliente, Email, Telefone } from './../../core/model';
+import { CepService } from '../../core/cep.service';
 
 @Component({
   selector: 'app-cliente-cadastro',
@@ -20,6 +21,7 @@ export class ClienteCadastroComponent implements OnInit {
  
   constructor(
     private clienteService: ClienteService,
+    private cepService: CepService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
