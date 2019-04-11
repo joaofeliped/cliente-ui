@@ -22,6 +22,12 @@ export class ClienteService {
       .then(response => response);
   }
 
+  listarTiposTelefones(): Promise<any> {
+    return this.http.get<any>(this.clientesUrl + '/tipos-telefone')
+      .toPromise()
+      .then(response => response);
+  }
+
   excluir(codigo: number): Promise<void> {
     return this.http.delete(`${this.clientesUrl}/${codigo}`)
       .toPromise()

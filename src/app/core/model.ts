@@ -3,7 +3,6 @@
   export class Endereco {
     codigo: number; 
     logradouro: string;
-    numero: string;
     complemento: string;
     bairro: string;
     cep: string;
@@ -13,8 +12,8 @@
   
   export class Telefone {
     codigo: number;
-    tipo: string;
-    numero: number;
+    tipo: 'CELULAR';
+    numero: string;
   }
 
   export class Email {

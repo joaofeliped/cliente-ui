@@ -12,8 +12,7 @@
 
   <div class="ui-g">
     <div class="ui-12">
-      <p-table [value]="clientes" [responsive]="true"
-        [totalRecords]="totalRegistros"
+      <p-table [value]="clientes" [paginator]="true" [rows]="10"
         #tabela>
         <ng-template pTemplate="header">
           <tr>

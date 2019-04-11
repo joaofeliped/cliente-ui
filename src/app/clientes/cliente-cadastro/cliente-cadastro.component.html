@@ -19,9 +19,20 @@
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>CPF</label>
+          <p-inputMask name="cpf" mask="999.999.999-99"
+            [(ngModel)]="cliente.cpf"
+            #cpf="ngModel" required></p-inputMask>
+  
+          <app-message [control]="cpf" error="required"
+            text="Informe o CPF"></app-message>
+        </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>CEP</label>
         <p-inputMask name="cep" mask="99.999-999"
           [(ngModel)]="cliente.endereco.cep"
+          (ngModelChange)="buscarPorCep()"
           #cep="ngModel" required></p-inputMask>
 
         <app-message [control]="cep" error="required"
@@ -37,17 +48,6 @@
         <app-message [control]="logradouro" error="required"
           text="Informe o logradouro"></app-message>
       </div>
-
-      <div class="ui-g-12 ui-md-3 ui-fluid">
-        <label>Número</label>
-        <input pInputText type="text" name="numero"
-          [(ngModel)]="cliente.endereco.numero"
-          #numero="ngModel" required>
-
-        <app-message [control]="numero" error="required"
-          text="Informe o número"></app-message>
-      </div>
-
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>Complemento</label>
         <input pInputText type="text" name="complemento"
@@ -91,7 +91,7 @@
 
         <div *ngFor="let email of cliente.emails; let i = index">
           <input pInputText type="text" name="email"
-            [(ngModel)]="email"
+            [(ngModel)]="email.descricao"
             #numero="ngModel" required>
         </div>
 
@@ -103,20 +103,24 @@
         <label>Telefones</label>
 
         <div *ngFor="let telefone of cliente.telefones; let i = index">
-          <input pInputText type="text" name="telefone"
-            [(ngModel)]="telefone"
-            #numero="ngModel" required>
+          <p-dropdown placeholder="Selecione..." 
+            [options]="tipoTelefones"
+            [(ngModel)]="telefone.tipo" name="tipoTelefone"
+            (onChange)="selecionarTipoTelefone(telefone)"
+            #tipo="ngModel" required></p-dropdown>
+
+        
+            <p-inputMask name="telefone" [mask]="mascaraTelefone"
+              [(ngModel)]="telefone.numero"
+              #numero="ngModel" required></p-inputMask>
         </div>
 
-        <button pButton type="button" label="Adicionar Email" class="ui-button-info"
+        <button pButton type="button" label="Adicionar Telefone" class="ui-button-info"
           (click)="adicionarTelefone()"></button>
       </div>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
-        <button pButton type="button" label="Nova" class="ui-button-info"
-          (click)="nova(f)"></button>
-
+        <button pButton type="submit" label="Salvar" ></button>
         <a routerLink="/clientes">Voltar para a pesquisa</a>
       </div>
     </div>

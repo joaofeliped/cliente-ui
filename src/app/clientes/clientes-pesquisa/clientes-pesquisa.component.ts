@@ -11,7 +11,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class ClientesPesquisaComponent implements OnInit {
 
-  totalRegistros = 0;
   clientes = [];
   @ViewChild('tabela') grid;
 
@@ -26,10 +25,9 @@ export class ClientesPesquisaComponent implements OnInit {
     this.pesquisar();
   }
 
-  pesquisar(pagina = 0) {
+  pesquisar() {
     this.clienteService.listarTodas()
       .then(resultado => {
-        this.totalRegistros = resultado.length;
         this.clientes = resultado;
         
         

@@ -18,6 +18,8 @@ import { CepService } from '../../core/cep.service';
 export class ClienteCadastroComponent implements OnInit {
 
   cliente = new Cliente();
+  tipoTelefones = [];
+  mascaraTelefone = '(99)99999-9999';
  
   constructor(
     private clienteService: ClienteService,
@@ -34,17 +36,49 @@ export class ClienteCadastroComponent implements OnInit {
 
     this.title.setTitle('Nova cliente');
 
+    this.buscarTiposTelefone();
+
     if (codigocliente) {
       this.carregarcliente(codigocliente);
     } else {
       this.adicionarEmail();
       this.adicionarTelefone();
+     
     }
   }
-
   
   get editando() {
     return Boolean(this.cliente.codigo)
+  }
+
+  buscarPorCep() {
+    this.cepService.buscarPorCep(this.cliente.endereco.cep.replace(/[^\d]+/g,''))
+        .then(endereco => {
+          this.cliente.endereco.bairro = endereco.bairro;
+          this.cliente.endereco.cidade = endereco.localidade;
+          this.cliente.endereco.uf = endereco.uf;
+          this.cliente.endereco.logradouro = endereco.logradouro;
+          this.cliente.endereco.complemento = endereco.complemento;
+        })
+        .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  selecionarTipoTelefone(telefone: Telefone) {
+     /* if(telefone.tipo === 'RESIDENCIAL') {
+        
+      } else if(telefone.tipo === 'COMERCIAL') {
+
+      } else {
+
+      }*/
+  }
+
+  buscarTiposTelefone() {
+    this.clienteService.listarTiposTelefones()
+      .then(tiposTelefones => {
+        this.tipoTelefones = tiposTelefones;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   carregarcliente(codigo: number) {
@@ -58,6 +92,13 @@ export class ClienteCadastroComponent implements OnInit {
   }
 
   salvar(form: FormControl) {
+    this.cliente.telefones.map(t => {
+      t.tipo = 'CELULAR';
+      t.numero = t.numero.replace(/[^\d]+/g,'');
+    });
+    this.cliente.endereco.cep = this.cliente.endereco.cep.replace(/[^\d]+/g,'');
+    this.cliente.cpf = this.cliente.cpf.replace(/[^\d]+/g,'');
+    
     if (this.editando) {
       this.atualizarCliente(form);
     } else {
@@ -83,16 +124,6 @@ export class ClienteCadastroComponent implements OnInit {
         this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  nova(form: FormControl) {
-    form.reset();
-
-    setTimeout(function() {
-      this.cliente = new Cliente();
-    }.bind(this), 1);
-
-    this.router.navigate(['/clientes/novo']);
   }
 
   adicionarEmail() {
