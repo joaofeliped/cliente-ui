@@ -1,3 +1,125 @@
-<p>
-  cliente-cadastro works!
-</p>
+<div class="container">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>Novo Cliente</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome"
+          [(ngModel)]="cliente.nome"
+          #nome="ngModel" required minlength="5">
+
+        <app-message [control]="nome" error="required"
+          text="Informe o nome"></app-message>
+        <app-message [control]="nome" error="minlength"
+          text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>CEP</label>
+        <p-inputMask name="cep" mask="99.999-999"
+          [(ngModel)]="cliente.endereco.cep"
+          #cep="ngModel" required></p-inputMask>
+
+        <app-message [control]="cep" error="required"
+          text="Informe o CEP"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Logradouro</label>
+        <input pInputText type="text" name="logradouro"
+          [(ngModel)]="cliente.endereco.logradouro"
+          #logradouro="ngModel" required>
+
+        <app-message [control]="logradouro" error="required"
+          text="Informe o logradouro"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Número</label>
+        <input pInputText type="text" name="numero"
+          [(ngModel)]="cliente.endereco.numero"
+          #numero="ngModel" required>
+
+        <app-message [control]="numero" error="required"
+          text="Informe o número"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Complemento</label>
+        <input pInputText type="text" name="complemento"
+        [(ngModel)]="cliente.endereco.complemento">
+      </div>
+
+      <div class="ui-g-12 ui-md-4 ui-fluid">
+        <label>Bairro</label>
+        <input pInputText type="text" name="bairro"
+          [(ngModel)]="cliente.endereco.bairro"
+          #bairro="ngModel" required>
+
+        <app-message [control]="bairro" error="required"
+          text="Informe o bairro"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>UF</label>
+
+        <input pInputText type="text" name="uf"
+          [(ngModel)]="cliente.endereco.uf"
+          #numero="ngModel" required>
+
+        <app-message [control]="uf" error="required"
+          text="Informe a uf"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Cidade</label>
+
+          <input pInputText type="text" name="cidade"
+            [(ngModel)]="cliente.endereco.cidade"
+            #numero="ngModel" required>
+
+          <app-message [control]="cidade" error="required"
+            text="Informe a cidade"></app-message>
+        </div>
+
+      <div class="ui-g-12">
+        <label>Emails</label>
+
+        <div *ngFor="let email of cliente.emails; let i = index">
+          <input pInputText type="text" name="email"
+            [(ngModel)]="email"
+            #numero="ngModel" required>
+        </div>
+
+        <button pButton type="button" label="Adicionar Email" class="ui-button-info"
+          (click)="adicionarEmail()"></button>
+      </div>
+
+      <div class="ui-g-12">
+        <label>Telefones</label>
+
+        <div *ngFor="let telefone of cliente.telefones; let i = index">
+          <input pInputText type="text" name="telefone"
+            [(ngModel)]="telefone"
+            #numero="ngModel" required>
+        </div>
+
+        <button pButton type="button" label="Adicionar Email" class="ui-button-info"
+          (click)="adicionarTelefone()"></button>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
+        <button pButton type="button" label="Nova" class="ui-button-info"
+          (click)="nova(f)"></button>
+
+        <a routerLink="/clientes">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>

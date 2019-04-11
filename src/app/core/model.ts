@@ -11,8 +11,6 @@
     uf: string;
   }
   
-  
-
   export class Telefone {
     codigo: number;
     tipo: string;
