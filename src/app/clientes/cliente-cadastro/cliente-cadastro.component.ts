@@ -20,7 +20,7 @@ export class ClienteCadastroComponent implements OnInit {
   cliente = new Cliente();
   tipoTelefones = [];
   mascaraTelefone = '(99)99999-9999';
- 
+
   constructor(
     private clienteService: ClienteService,
     private cepService: CepService,
@@ -43,16 +43,17 @@ export class ClienteCadastroComponent implements OnInit {
     } else {
       this.adicionarEmail();
       this.adicionarTelefone();
-     
+
     }
   }
-  
+
   get editando() {
     return Boolean(this.cliente.codigo)
   }
 
   buscarPorCep() {
-    this.cepService.buscarPorCep(this.cliente.endereco.cep.replace(/[^\d]+/g,''))
+    if (this.cliente.endereco.cep && this.cliente.endereco.cep.length === 10) {
+      this.cepService.buscarPorCep(this.cliente.endereco.cep.replace(/[^\d]+/g, ''))
         .then(endereco => {
           this.cliente.endereco.bairro = endereco.bairro;
           this.cliente.endereco.cidade = endereco.localidade;
@@ -61,16 +62,17 @@ export class ClienteCadastroComponent implements OnInit {
           this.cliente.endereco.complemento = endereco.complemento;
         })
         .catch(erro => this.errorHandler.handle(erro));
+    }
   }
 
   selecionarTipoTelefone(telefone: Telefone) {
-     /* if(telefone.tipo === 'RESIDENCIAL') {
-        
-      } else if(telefone.tipo === 'COMERCIAL') {
+    /* if(telefone.tipo === 'RESIDENCIAL') {
+       
+     } else if(telefone.tipo === 'COMERCIAL') {
 
-      } else {
+     } else {
 
-      }*/
+     }*/
   }
 
   buscarTiposTelefone() {
@@ -94,11 +96,11 @@ export class ClienteCadastroComponent implements OnInit {
   salvar(form: FormControl) {
     this.cliente.telefones.map(t => {
       t.tipo = 'CELULAR';
-      t.numero = t.numero.replace(/[^\d]+/g,'');
+      t.numero = t.numero.replace(/[^\d]+/g, '');
     });
-    this.cliente.endereco.cep = this.cliente.endereco.cep.replace(/[^\d]+/g,'');
-    this.cliente.cpf = this.cliente.cpf.replace(/[^\d]+/g,'');
-    
+    this.cliente.endereco.cep = this.cliente.endereco.cep.replace(/[^\d]+/g, '');
+    this.cliente.cpf = this.cliente.cpf.replace(/[^\d]+/g, '');
+
     if (this.editando) {
       this.atualizarCliente(form);
     } else {
